@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ishrath Mufaiza — MERN Stack Developer</title>
+  <!-- Google Fonts & FontAwesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --bg-color: #030712;
+      --card-bg: rgba(17, 24, 39, 0.75);
+      --border-color: rgba(55, 65, 81, 0.5);
+      --primary: #38bdf8;
+      --secondary: #818cf8;
+      --accent: #f43f5e;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'Fira Code', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Option 2: Matrix Code Rain Canvas Background */
+    #bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.35; /* Subtle backdrop so it doesn't overpower text */
+    }
+
+    /* Multi-Language Rotating Greeting Banner */
+    .greeting-banner {
+      background: linear-gradient(90deg, rgba(56, 189, 248, 0.15), rgba(129, 140, 248, 0.15));
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 20px;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: var(--primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .greeting-text {
+      display: inline-block;
+      animation: fadeInOut 4s infinite ease-in-out;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateY(4px); }
+      15% { opacity: 1; transform: translateY(0); }
+      85% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-4px); }
+    }
+
+    /* Navigation */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1100px;
+      margin: 20px auto;
+      padding: 15px 30px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 55px;
+      z-index: 999;
+    }
+
+    .nav-logo {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px 80px;
+    }
+
+    /* Hero Section */
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
+      align-items: center;
+      min-height: 80vh;
+      padding: 40px 0;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 15px;
+      background: linear-gradient(135deg, #f3f4f6 30%, var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-content p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 14px;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--primary);
+      border-radius: 50px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      margin-bottom: 20px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 15px;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #030712;
+      box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(56, 189, 248, 0.5);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* Terminal Window */
+    .terminal {
+      background: #090d16;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+
+    .terminal-header {
+      background: #111827;
+      padding: 12px 16px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-red { background: #f43f5e; }
+    .dot-yellow { background: #fbbf24; }
+    .dot-green { background: #34d399; }
+    .terminal-title {
+      margin-left: auto;
+      margin-right: auto;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .terminal-body {
+      padding: 20px;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: #34d399;
+      line-height: 1.7;
+    }
+
+    .terminal-body .cmd { color: #f3f4f6; }
+    .terminal-body .str { color: #fbbf24; }
+
+    /* Sections */
+    section {
+      padding: 80px 0 20px;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .section-title span {
+      color: var(--primary);
+      font-family: var(--font-mono);
+      font-size: 1.2rem;
+    }
+
+    /* Cards Grid */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 25px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 30px;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      border-color: var(--primary);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(56, 189, 248, 0.1);
+    }
+
+    /* Skills Badges */
+    .skills-category {
+      margin-bottom: 20px;
+    }
+
+    .skills-category h3 {
+      font-size: 1rem;
+      color: var(--primary);
+      margin-bottom: 10px;
+      font-family: var(--font-mono);
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tag {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border-color);
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-family: var(--font-mono);
+      color: var(--text-main);
+    }
+
+    /* Experience Timeline */
+    .timeline {
+      border-left: 2px solid var(--border-color);
+      padding-left: 30px;
+      margin-left: 10px;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 40px;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -36px;
+      top: 5px;
+      width: 12px;
+      height: 12px;
+      background: var(--primary);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--primary);
+    }
+
+    .timeline-item h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .timeline-item .company {
+      color: var(--primary);
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      margin: 5px 0 15px;
+    }
+
+    .timeline-item ul {
+      list-style-type: disc;
+      color: var(--text-muted);
+      padding-left: 20px;
+      line-height: 1.6;
+    }
+
+    /* Projects Cards */
+    .project-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .project-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .tech-stack span {
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      background: rgba(129, 140, 248, 0.1);
+      color: var(--secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    /* Contact Section */
+    .contact-box {
+      text-align: center;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 50px 20px;
+      backdrop-filter: blur(10px);
+    }
+
+    .contact-box h2 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+    }
+
+    .contact-box p {
+      color: var(--text-muted);
+      margin-bottom: 30px;
+      font-size: 1.1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 0;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border-color);
+      margin-top: 80px;
+    }
+
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; text-align: center; }
+      .btn-group { justify-content: center; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Option 2: Matrix Code Rain Canvas -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Multi-Language Rotating Greeting Banner -->
+  <div class="greeting-banner">
+    <span>✦</span> <span id="dynamic-greeting" class="greeting-text">Hello visitor! Welcome to Ishrath Mufaiza's portfolio. 🚀</span>
+  </div>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="#" class="nav-logo">&lt;Ishrath /&gt;</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    
+    <!-- Hero Section -->
+    <header class="hero">
+      <div class="hero-content">
+        <div class="badge">🚀 MERN Stack Developer</div>
+        <h1>Hi, I'm Ishrath Mufaiza</h1>
+        <p>B.Tech Electronics &amp; Computer Engineering student at Mahindra University[cite: 2]. Passionate about building robust, full-stack web architectures and scalable user interfaces from scratch[cite: 2].</p>
+        <div class="btn-group">
+          <a href="#projects" class="btn btn-primary"><i class="fa-solid fa-code"></i> View Projects</a>
+          <a href="mailto:ishrathmufaiza24@gmail.com" class="btn btn-outline"><i class="fa-solid fa-envelope"></i> Let's Talk</a>
+        </div>
+      </div>
+      <div class="terminal">
+        <div class="terminal-header">
+          <div class="dot dot-red"></div>
+          <div class="dot dot-yellow"></div>
+          <div class="dot dot-green"></div>
+          <div class="terminal-title">ishrath@mern-env:~</div>
+        </div>
+        <div class="terminal-body">
+          <span class="cmd">$</span> node<br>
+          > <span class="str">const developer = {</span><br>
+          &nbsp;&nbsp;name: <span class="str">'Ishrath Mufaiza'</span>,<br>
+          &nbsp;&nbsp;role: <span class="str">'MERN Specialist'</span>,<br>
+          &nbsp;&nbsp;focus: <span class="str">'Full-Stack Web Apps'</span>,<br>
+          &nbsp;&nbsp;status: <span class="str">'Ready to build & deploy'</span><br>
+          > <span class="str">};</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about">
+      <div class="section-title"><span>01.</span> Profile Overview</div>
+      <div class="card">
+        <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-main);">
+          Electronics &amp; Computer Engineering student with hands-on experience in MERN stack development, responsive web applications, and business websites[cite: 2]. Skilled in building full-stack solutions with React.js, Node.js, Express.js, MongoDB, and PHP[cite: 2]. Committed to writing clean code and shipping production-ready applications.
+        </p>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+      <div class="section-title"><span>02.</span> Technical Stack</div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="skills-category">
+            <h3>Frontend Development</h3>
+            <div class="skill-tags">
+              <span class="tag">HTML</span>
+              <span class="tag">CSS</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">React.js</span>
+              <span class="tag">Bootstrap</span>
+              <span class="tag">Responsive Design</span>
+            </div>
+          </div>
+          <div class="skills-category" style="margin-top: 25px;">
+            <h3>Backend Development</h3>
+            <div class="skill-tags">
+              <span class="tag">Node.js</span>
+              <span class="tag">Express.js</span>
+              <span class="tag">PHP</span>
+              <span class="tag">REST APIs</span>
+              <span class="tag">Authentication</span>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="skills-category">
+            <h3>Databases &amp; Tools</h3>
+            <div class="skill-tags">
+              <span class="tag">MongoDB</span>
+              <span class="tag">SQL</span>
+              <span class="tag">Git</span>
+              <span class="tag">GitHub</span>
+              <span class="tag">Vercel</span>
+              <span class="tag">CRUD Operations</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience">
+      <div class="section-title"><span>03.</span> Professional Experience</div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <h3>Web Developer Intern</h3>
+          <div class="company">Bill Bitra | Hyderabad, India[cite: 2]</div>
+          <ul>
+            <li>Developed a student school portal using HTML, CSS, JavaScript, PHP, and Bootstrap[cite: 2].</li>
+            <li>Built responsive interfaces and implemented student management features[cite: 2].</li>
+            <li>Improved usability and responsiveness across multiple devices[cite: 2].</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+      <div class="section-title"><span>04.</span> Featured Projects</div>
+      <div class="grid-2">
+        <div class="card project-card">
+          <h3>E-Commerce Website <i class="fa-solid fa-cart-shopping" style="color:var(--primary); font-size: 1rem;"></i></h3>
+          <p>Full-stack e-commerce platform equipped with authentication, cart management, and order processing capabilities[cite: 2]. Fully deployed and optimized[cite: 2].</p>
+          <div class="tech-stack">
+            <span>React.js</span>
+            <span>Express.js</span>
+            <span>MongoDB</span>
+            <span>JavaScript</span>
+            <span>Vercel</span>
+          </div>
+        </div>
+        <div class="card project-card">
+          <h3>Coaching Institute Website <i class="fa-solid fa-graduation-cap" style="color:var(--primary); font-size: 1rem;"></i></h3>
+          <p>Designed and developed a fully responsive coaching platform featuring comprehensive course info, faculty profiles, testimonials, and active contact modules[cite: 2].</p>
+          <div class="tech-stack">
+            <span>HTML</span>
+            <span>CSS</span>
+            <span>JavaScript</span>
+          </div>
+        </div>
+        <div class="card project-card">
+          <h3>Restaurant Website <i class="fa-solid fa-utensils" style="color:var(--primary); font-size: 1rem;"></i></h3>
+          <p>Interactive, responsive food service website equipped with dynamic menu sections, customer testimonials, and essential business info[cite: 2]. Deployed seamlessly on Vercel[cite: 2].</p>
+          <div class="tech-stack">
+            <span>HTML</span>
+            <span>CSS</span>
+            <span>JavaScript</span>
+            <span>Vercel</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education">
+      <div class="section-title"><span>05.</span> Education</div>
+      <div class="card" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+        <div>
+          <h3 style="font-size: 1.2rem; margin-bottom: 5px;">B.Tech — Electronics &amp; Computer Engineering</h3>
+          <p style="color: var(--primary); font-family: var(--font-mono); font-size: 0.9rem;">Mahindra University, Hyderabad[cite: 2]</p>
+        </div>
+        <div style="text-align: right; font-family: var(--font-mono);">
+          <div style="color: var(--secondary); font-weight: bold;">CGPA: 7.23 / 10[cite: 2]</div>
+          <div style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">Expected Aug 2027[cite: 2]</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+      <div class="contact-box">
+        <h2>Let's Build Something Together!</h2>
+        <p>Open for full-stack developer roles, internships, and collaborative opportunities[cite: 2].</p>
+        <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+          <a href="mailto:ishrathmufaiza24@gmail.com" class="btn btn-primary"><i class="fa-solid fa-envelope"></i> ishrathmufaiza24@gmail.com</a>
+          <a href="https://github.com/Ishrath2224" target="_blank" rel="noopener" class="btn btn-outline"><i class="fa-brands fa-github"></i> GitHub</a>
+          <a href="https://www.linkedin.com/in/ishrath-mufaiza-583366320" target="_blank" rel="noopener" class="btn btn-outline"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Ishrath Mufaiza. Crafted with code &amp; creativity.</p>
+  </footer>
+
+  <!-- Scripts for Multi-Language Greetings & Matrix Code Rain Animation -->
+  <script>
+    // Multi-language greetings rotator
+    const greetings = [
+      "Hello visitor! Welcome to Ishrath Mufaiza's portfolio. 🚀",
+      "こんにちは！いしゃると申します。ポートフォリオへようこそ！",
+      "¡Hola visitante! Bienvenido al portafolio de Ishrath Mufaiza. ✨",
+      "Bonjour ! Bienvenue sur le portfolio d'Ishrath Mufaiza. 🌟",
+      "مرحباً بك! أهلاً بك في معرض أعمال إشراث مفايزة.",
+      "नमस्ते आगंतुक! इश्वरथ मुफैज़ा के पोर्टफोलियो में आपका स्वागत है。 💻"
+    ];
+    
+    let gIndex = 0;
+    const greetingElement = document.getElementById('dynamic-greeting');
+    
+    setInterval(() => {
+      gIndex = (gIndex + 1) % greetings.length;
+      greetingElement.style.animation = 'none';
+      greetingElement.offsetHeight; 
+      greetingElement.style.animation = 'fadeInOut 4s infinite ease-in-out';
+      greetingElement.textContent = greetings[gIndex];
+    }, 4000);
+
+    // Option 2: Matrix Code Rain Animation Script
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let width, height;
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // Custom characters mixing binary, code symbols, and Japanese katakana
+    const chars = "010101010123456789ABCDEF{}[]<>nodeJSreactMONGO=>async";
+    const charArray = chars.split("");
+
+    const fontSize = 14;
+    let columns = width / fontSize;
+
+    const drops = [];
+    for (let i = 0; i < columns; i++) {
+      drops[i] = 1;
+    }
+
+    function drawMatrix() {
+      // Semi-transparent black background fade to create trailing glow effect
+      ctx.fillStyle = 'rgba(3, 7, 18, 0.08)';
+      ctx.fillRect(0, 0, width, height);
+
+      ctx.fillStyle = '#38bdf8'; // Electric blue / cyan accent color matching the site theme
+      ctx.font = fontSize + 'px monospace';
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = charArray[Math.floor(Math.random() * charArray.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    // Run the matrix loop at ~30fps for smooth cascading effect
+    setInterval(drawMatrix, 35);
+
+    window.addEventListener('resize', () => {
+      resize();
+      columns = width / fontSize;
+      drops.length = 0;
+      for (let i = 0; i < columns; i++) {
+        drops[i] = 1;
+      }
+    });
+  </script>
+</body>
+</html>
